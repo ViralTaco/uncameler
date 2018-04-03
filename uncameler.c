@@ -20,24 +20,14 @@ int main(int argc, char *argv[])
                 exit(EXIT_FAILURE);
         }
         
-        const string file_to_decamelize_location = argv[1];
-        
         FILE *file_ptr;
         
-        if ((file_ptr = fopen(file_to_decamelize_location, "r")) == NULL)
+        if ((file_ptr = fopen(argv[1], "r")) == NULL)
         {
                 fputs("ERROR: Couldn't read the file", stderr);
                 exit(EXIT_FAILURE);
         }
-        
-        FILE *new_file_ptr;
-        
-        if ((new_file_ptr = fopen("./uncameled.txt", "w")) == NULL)
-        {
-                fputs("ERROR: Couldn't create file", stderr);
-                exit(EXIT_FAILURE);
-        }
-        
+
         bool is_ok = true;
         int c = 0;
         int temp = 0;
@@ -48,13 +38,13 @@ int main(int argc, char *argv[])
                 
                 if (islower(temp) && isupper(c) && is_ok)
                 {
-                        fputc('_', new_file_ptr);
-                        fputc(tolower(c), new_file_ptr);
+                        fputc('_', stdout);
+                        fputc(tolower(c), stdout);
                 }
-                else fputc(c, new_file_ptr);
+                else fputc(c, stdout);
                 
                 temp = c;
         } while (c != EOF);
         
-        fclose(file_ptr); fclose(new_file_ptr);
+        fclose(file_ptr);
 }
